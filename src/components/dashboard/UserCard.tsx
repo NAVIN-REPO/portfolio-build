@@ -4,13 +4,16 @@ import { User } from "@/data/users";
 interface UserCardProps {
   user: User;
   index: number;
+  onClick?: () => void;
 }
 
-export function UserCard({ user, index }: UserCardProps) {
+export function UserCard({ user, index, onClick }: UserCardProps) {
   return (
     <div
+      onClick={onClick}
       className={cn(
         "group relative flex items-center gap-4 rounded-xl border border-border/50 bg-card/50 p-4 transition-all duration-300 hover:border-primary/50 hover:bg-card",
+        onClick && "cursor-pointer",
         "opacity-0 animate-fade-in"
       )}
       style={{ animationDelay: `${index * 100}ms` }}
