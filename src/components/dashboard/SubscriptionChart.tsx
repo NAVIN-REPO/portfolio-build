@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -7,9 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 import { cn } from "@/lib/utils";
+import { IndianRupee, TrendingUp } from "lucide-react";
 
 const dailyData = [
   { name: "Mon", basic: 12, pro: 8, premium: 3 },
@@ -38,10 +38,12 @@ const yearlyData = [
   { name: "2024", basic: 3200, pro: 2200, premium: 1100 },
 ];
 
+const PLAN_PRICES = { basic: 199, pro: 499, premium: 999 };
+
 type TimeRange = "daily" | "monthly" | "yearly";
 
 export function SubscriptionChart() {
-  const [timeRange, setTimeRange] = useState<TimeRange>("monthly");
+  const [timeRange, setTimeRange] = useState<TimeRange>("daily");
 
   const getData = () => {
     switch (timeRange) {
@@ -54,8 +56,67 @@ export function SubscriptionChart() {
     }
   };
 
+  const currentData = getData();
+
+  const { totalRevenue, revenueByPlan } = useMemo(() => {
+    const basicTotal = currentData.reduce((sum, d) => sum + d.basic, 0);
+    const proTotal = currentData.reduce((sum, d) => sum + d.pro, 0);
+    const premiumTotal = currentData.reduce((sum, d) => sum + d.premium, 0);
+
+    return {
+      totalRevenue:
+        basicTotal * PLAN_PRICES.basic +
+        proTotal * PLAN_PRICES.pro +
+        premiumTotal * PLAN_PRICES.premium,
+      revenueByPlan: {
+        basic: basicTotal * PLAN_PRICES.basic,
+        pro: proTotal * PLAN_PRICES.pro,
+        premium: premiumTotal * PLAN_PRICES.premium,
+      },
+    };
+  }, [currentData]);
+
+  const formatCurrency = (value: number) => {
+    if (value >= 100000) return `₹${(value / 100000).toFixed(1)}L`;
+    if (value >= 1000) return `₹${(value / 1000).toFixed(1)}K`;
+    return `₹${value}`;
+  };
+
   return (
     <div className="space-y-4">
+      {/* Revenue Summary */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="rounded-lg bg-gradient-to-br from-primary/20 to-violet/10 p-3 border border-primary/20">
+          <div className="flex items-center gap-2 text-primary mb-1">
+            <IndianRupee className="h-4 w-4" />
+            <span className="text-xs font-medium">Total Revenue</span>
+          </div>
+          <p className="text-lg font-bold text-foreground">{formatCurrency(totalRevenue)}</p>
+        </div>
+        <div className="rounded-lg bg-emerald/10 p-3 border border-emerald/20">
+          <div className="flex items-center gap-2 text-emerald mb-1">
+            <div className="h-2 w-2 rounded-full bg-emerald" />
+            <span className="text-xs font-medium">Basic ₹199</span>
+          </div>
+          <p className="text-lg font-bold text-foreground">{formatCurrency(revenueByPlan.basic)}</p>
+        </div>
+        <div className="rounded-lg bg-amber/10 p-3 border border-amber/20">
+          <div className="flex items-center gap-2 text-amber mb-1">
+            <div className="h-2 w-2 rounded-full bg-amber" />
+            <span className="text-xs font-medium">Pro ₹499</span>
+          </div>
+          <p className="text-lg font-bold text-foreground">{formatCurrency(revenueByPlan.pro)}</p>
+        </div>
+        <div className="rounded-lg bg-rose/10 p-3 border border-rose/20">
+          <div className="flex items-center gap-2 text-rose mb-1">
+            <div className="h-2 w-2 rounded-full bg-rose" />
+            <span className="text-xs font-medium">Premium ₹999</span>
+          </div>
+          <p className="text-lg font-bold text-foreground">{formatCurrency(revenueByPlan.premium)}</p>
+        </div>
+      </div>
+
+      {/* Time Range Toggle */}
       <div className="flex gap-2">
         {(["daily", "monthly", "yearly"] as TimeRange[]).map((range) => (
           <button
@@ -73,34 +134,20 @@ export function SubscriptionChart() {
         ))}
       </div>
 
-      <div className="flex items-center gap-6 text-sm">
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-emerald" />
-          <span className="text-muted-foreground">Basic ₹199</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-amber" />
-          <span className="text-muted-foreground">Pro ₹499</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-rose" />
-          <span className="text-muted-foreground">Premium ₹999</span>
-        </div>
-      </div>
-
-      <div className="h-[300px] w-full">
+      {/* Chart */}
+      <div className="h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={getData()} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+          <BarChart data={currentData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(217, 33%, 17%)" vertical={false} />
-            <XAxis 
-              dataKey="name" 
-              stroke="hsl(215, 20%, 65%)" 
+            <XAxis
+              dataKey="name"
+              stroke="hsl(215, 20%, 65%)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
             />
-            <YAxis 
-              stroke="hsl(215, 20%, 65%)" 
+            <YAxis
+              stroke="hsl(215, 20%, 65%)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
@@ -113,26 +160,31 @@ export function SubscriptionChart() {
                 color: "hsl(210, 40%, 98%)",
               }}
               cursor={{ fill: "hsl(217, 33%, 17%)", opacity: 0.3 }}
+              formatter={(value: number, name: string) => {
+                const planKey = name.toLowerCase().split(" ")[0] as keyof typeof PLAN_PRICES;
+                const revenue = value * PLAN_PRICES[planKey];
+                return [`${value} subs (₹${revenue.toLocaleString()})`, name];
+              }}
             />
-            <Bar 
-              dataKey="basic" 
+            <Bar
+              dataKey="basic"
               name="Basic ₹199"
-              fill="hsl(160, 84%, 39%)" 
+              fill="hsl(160, 84%, 39%)"
               radius={[4, 4, 0, 0]}
               animationDuration={800}
             />
-            <Bar 
-              dataKey="pro" 
+            <Bar
+              dataKey="pro"
               name="Pro ₹499"
-              fill="hsl(38, 92%, 50%)" 
+              fill="hsl(38, 92%, 50%)"
               radius={[4, 4, 0, 0]}
               animationDuration={800}
               animationBegin={200}
             />
-            <Bar 
-              dataKey="premium" 
+            <Bar
+              dataKey="premium"
               name="Premium ₹999"
-              fill="hsl(350, 89%, 60%)" 
+              fill="hsl(350, 89%, 60%)"
               radius={[4, 4, 0, 0]}
               animationDuration={800}
               animationBegin={400}

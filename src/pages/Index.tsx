@@ -12,30 +12,39 @@ const Index = () => {
   const totalSubscriptions = users.length;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen professional-bg relative overflow-hidden">
+      {/* Floating Orbs */}
+      <div className="floating-orb w-96 h-96 bg-primary/30 -top-48 -left-48" />
+      <div className="floating-orb w-80 h-80 bg-violet/20 top-1/3 -right-40" style={{ animationDelay: '2s' }} />
+      <div className="floating-orb w-64 h-64 bg-emerald/20 bottom-20 left-1/4" style={{ animationDelay: '4s' }} />
+      
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
+
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/60 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-violet glow-primary">
               <LayoutDashboard className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground">Portfolio Admin</h1>
+              <h1 className="text-lg font-bold gradient-text">Portfolio Admin</h1>
               <p className="text-xs text-muted-foreground">Dashboard Overview</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden text-sm text-muted-foreground sm:block">
-              Last updated: Just now
-            </span>
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-violet" />
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald/10 border border-emerald/20">
+              <span className="h-2 w-2 rounded-full bg-emerald animate-pulse" />
+              <span className="text-xs text-emerald font-medium">Live</span>
+            </div>
+            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-violet ring-2 ring-primary/20" />
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Stats Grid */}
         <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
