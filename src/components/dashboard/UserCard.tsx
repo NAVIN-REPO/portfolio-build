@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { User } from "@/data/users";
-import { ExternalLink } from "lucide-react";
 
 interface UserCardProps {
   user: User;
@@ -8,15 +7,10 @@ interface UserCardProps {
 }
 
 export function UserCard({ user, index }: UserCardProps) {
-  const handleClick = () => {
-    window.open(user.profileUrl, "_blank");
-  };
-
   return (
     <div
-      onClick={handleClick}
       className={cn(
-        "group relative flex cursor-pointer items-center gap-4 rounded-xl border border-border/50 bg-card/50 p-4 transition-all duration-300 hover:border-primary/50 hover:bg-card",
+        "group relative flex items-center gap-4 rounded-xl border border-border/50 bg-card/50 p-4 transition-all duration-300 hover:border-primary/50 hover:bg-card",
         "opacity-0 animate-fade-in"
       )}
       style={{ animationDelay: `${index * 100}ms` }}
@@ -51,7 +45,6 @@ export function UserCard({ user, index }: UserCardProps) {
         >
           {user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}
         </span>
-        <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
       </div>
     </div>
   );
