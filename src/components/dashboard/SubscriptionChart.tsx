@@ -12,30 +12,37 @@ import { cn } from "@/lib/utils";
 import { IndianRupee, TrendingUp } from "lucide-react";
 
 const dailyData = [
-  { name: "Mon", basic: 12, pro: 8, premium: 3 },
-  { name: "Tue", basic: 15, pro: 10, premium: 5 },
-  { name: "Wed", basic: 18, pro: 12, premium: 4 },
-  { name: "Thu", basic: 14, pro: 9, premium: 6 },
-  { name: "Fri", basic: 20, pro: 15, premium: 8 },
-  { name: "Sat", basic: 10, pro: 6, premium: 2 },
-  { name: "Sun", basic: 8, pro: 4, premium: 1 },
+  { name: "Mon", basic: 0, pro: 0, premium: 0 },
+  { name: "Tue", basic: 0, pro: 0, premium: 0 },
+  { name: "Wed", basic: 0, pro: 0, premium: 0 },
+  { name: "Thu", basic: 0, pro: 0, premium: 0 },
+  { name: "Fri", basic: 0, pro: 0, premium: 0 },
+  { name: "Sat", basic: 0, pro: 0, premium: 0 },
+  { name: "Sun", basic: 0, pro: 0, premium: 0 },
 ];
 
 const monthlyData = [
-  { name: "Jan", basic: 120, pro: 80, premium: 30 },
-  { name: "Feb", basic: 150, pro: 100, premium: 45 },
-  { name: "Mar", basic: 180, pro: 120, premium: 55 },
-  { name: "Apr", basic: 140, pro: 90, premium: 40 },
-  { name: "May", basic: 200, pro: 150, premium: 70 },
-  { name: "Jun", basic: 220, pro: 170, premium: 85 },
+  { name: "Apr", basic: 0, pro: 0, premium: 0 },
+  { name: "May", basic: 0, pro: 0, premium: 0 },
+  { name: "Jun", basic: 0, pro: 0, premium: 0 },
+  { name: "Jul", basic: 0, pro: 0, premium: 0 },
+  { name: "Aug", basic: 0, pro: 0, premium: 0 },
+  { name: "Sep", basic: 0, pro: 0, premium: 0 },
+  { name: "Oct", basic: 0, pro: 0, premium: 0 },
+  { name: "Nov", basic: 0, pro: 0, premium: 0 },
+  { name: "Dec", basic: 0, pro: 0, premium: 0 },
+  { name: "Jan", basic: 0, pro: 0, premium: 0 },
+  { name: "Feb", basic: 0, pro: 0, premium: 0 },
+  { name: "Mar", basic: 0, pro: 0, premium: 0 },
+  { name: "Apr", basic: 0, pro: 0, premium: 0 },
 ];
 
 const yearlyData = [
-  { name: "2020", basic: 800, pro: 400, premium: 150 },
-  { name: "2021", basic: 1200, pro: 700, premium: 280 },
-  { name: "2022", basic: 1800, pro: 1100, premium: 450 },
-  { name: "2023", basic: 2400, pro: 1600, premium: 720 },
-  { name: "2024", basic: 3200, pro: 2200, premium: 1100 },
+  { name: "2026", basic: 0, pro: 0, premium: 0 },
+  { name: "2027", basic: 0, pro: 0, premium: 0 },
+  { name: "2028", basic: 0, pro: 0, premium: 0 },
+  { name: "2029", basic: 0, pro: 0, premium: 0 },
+  { name: "2030", basic: 0, pro: 0, premium: 0 },
 ];
 
 const PLAN_PRICES = { basic: 199, pro: 499, premium: 999 };

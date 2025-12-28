@@ -11,10 +11,13 @@ import { users, User } from "@/data/users";
 
 const Index = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  
-  const totalUsers = users.length;
-  const activeUsers = users.filter((u) => u.status === "online").length;
-  const totalSubscriptions = users.length;
+
+  // const totalUsers = users.length;
+  // const activeUsers = users.filter((u) => u.status === "online").length;
+  // const totalSubscriptions = users.length;
+  const totalUsers = 0;
+  const activeUsers = 0;
+  const totalSubscriptions = 0;
 
   return (
     <DashboardLayout>
@@ -23,7 +26,7 @@ const Index = () => {
         <div className="floating-orb w-96 h-96 bg-primary/30 -top-48 -left-48" />
         <div className="floating-orb w-80 h-80 bg-violet/20 top-1/3 -right-40" style={{ animationDelay: '2s' }} />
         <div className="floating-orb w-64 h-64 bg-emerald/20 bottom-20 left-1/4" style={{ animationDelay: '4s' }} />
-        
+
         {/* Grid Pattern Overlay */}
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
 
@@ -35,7 +38,7 @@ const Index = () => {
               title="Total Users"
               value={totalUsers}
               icon={Users}
-              trend={12}
+              trend={0}
               color="primary"
               delay={0}
             />
@@ -43,15 +46,15 @@ const Index = () => {
               title="Active Users"
               value={activeUsers}
               icon={Activity}
-              trend={8}
+              trend={0}
               color="emerald"
               delay={100}
             />
             <StatCard
               title="Active Links"
-              value={5}
+              value={0}
               icon={Link2}
-              trend={-2}
+              trend={0}
               color="amber"
               delay={200}
             />
@@ -59,7 +62,7 @@ const Index = () => {
               title="Subscriptions"
               value={totalSubscriptions}
               icon={CreditCard}
-              trend={15}
+              trend={0}
               color="rose"
               delay={300}
             />
@@ -116,14 +119,15 @@ const Index = () => {
                 </div>
               </div>
               <div className="max-h-[400px] space-y-3 overflow-y-auto pr-2">
-                {users.map((user, index) => (
-                  <UserCard 
-                    key={user.id} 
-                    user={user} 
+                {[].map((user: User, index) => (
+                  <UserCard
+                    key={user.id}
+                    user={user}
                     index={index}
                     onClick={() => setSelectedUser(user)}
                   />
                 ))}
+                <div className="text-center py-8 text-muted-foreground">No users found</div>
               </div>
             </div>
 
@@ -140,7 +144,8 @@ const Index = () => {
                   <Link2 className="h-4 w-4 text-amber" />
                 </div>
               </div>
-              <ActiveLinks />
+              {/* <ActiveLinks /> */}
+              <div className="text-center py-8 text-muted-foreground">No active links</div>
             </div>
           </section>
         </main>

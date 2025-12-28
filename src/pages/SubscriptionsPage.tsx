@@ -1,6 +1,7 @@
 import { CreditCard } from "lucide-react";
 import { SubscriptionChart } from "@/components/dashboard/SubscriptionChart";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { CouponManagement } from "@/components/dashboard/CouponManagement";
 
 export default function SubscriptionsPage() {
   return (
@@ -59,6 +60,10 @@ export default function SubscriptionsPage() {
                 <li>• 24/7 support</li>
               </ul>
             </div>
+          </div>
+
+          <div className="mt-6">
+            <CouponManagement />
           </div>
         </div>
       </div>

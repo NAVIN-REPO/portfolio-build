@@ -1,15 +1,35 @@
+/**
+ * Main Application Component
+ * 
+ * This is the root component that sets up:
+ * - React Query for data fetching and caching
+ * - Toast notifications (Toaster and Sonner)
+ * - Tooltip provider for UI tooltips
+ * - React Router for navigation
+ */
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import UsersPage from "./pages/UsersPage";
-import SubscriptionsPage from "./pages/SubscriptionsPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-import SettingsPage from "./pages/SettingsPage";
-import NotFound from "./pages/NotFound";
 
+// Page imports
+import Landing from "./pages/Landing";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import Portfolios from "./pages/Portfolios";
+import Templates from "./pages/Templates";
+import TemplateEditor from "./pages/TemplateEditor";
+import PublicPortfolio from "./pages/PublicPortfolio";
+import History from "./pages/History";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Subscriptions from "./pages/Subscriptions";
+import NotFound from "./pages/NotFound";
+import AdminApp from "../admin/src/App";
+
+// Initialize React Query client
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -19,12 +39,26 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/subscriptions" element={<SubscriptionsPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Public routes */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/portfolio/:portfolioId" element={<PublicPortfolio />} />
+
+          {/* Admin routes */}
+          <Route path="/admin/*" element={<AdminApp />} />
+
+          {/* Protected routes */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/portfolios" element={<Portfolios />} />
+          <Route path="/templates" element={<Templates />} />
+          <Route path="/editor/template/:templateId" element={<TemplateEditor />} />
+          <Route path="/editor/portfolio/:portfolioId" element={<TemplateEditor />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
+
+          {/* 404 catch-all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
